@@ -1,8 +1,8 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Tests;
+namespace Bmohsen\DiscordLogger\Tests;
 
-use MarvinLabs\DiscordLogger\ServiceProvider;
+use Bmohsen\DiscordLogger\ServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase

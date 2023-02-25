@@ -1,15 +1,15 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Tests\Discord;
+namespace Bmohsen\DiscordLogger\Tests\Discord;
 
-use MarvinLabs\DiscordLogger\Discord\Embed;
-use MarvinLabs\DiscordLogger\Discord\Message;
-use MarvinLabs\DiscordLogger\Tests\Support\FakeDiscordWebHook;
-use MarvinLabs\DiscordLogger\Tests\TestCase;
+use Bmohsen\DiscordLogger\Discord\Embed;
+use Bmohsen\DiscordLogger\Discord\Message;
+use Bmohsen\DiscordLogger\Tests\Support\FakeDiscordWebHook;
+use Bmohsen\DiscordLogger\Tests\TestCase;
 
 class FakeDiscordWebHookTest extends TestCase
 {
-    /** @var \MarvinLabs\DiscordLogger\Tests\Support\FakeDiscordWebHook */
+    /** @var FakeDiscordWebHook */
     private $discord;
 
     protected function setUp(): void

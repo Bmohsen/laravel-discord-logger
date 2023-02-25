@@ -1,6 +1,6 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Discord;
+namespace Bmohsen\DiscordLogger\Discord;
 
 use Illuminate\Contracts\Support\Arrayable;
 

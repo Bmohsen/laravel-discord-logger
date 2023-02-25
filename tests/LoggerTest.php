@@ -1,21 +1,19 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Tests;
+namespace Bmohsen\DiscordLogger\Tests;
 
-use DateTime;
+use Bmohsen\DiscordLogger\Contracts\DiscordWebHook;
+use Bmohsen\DiscordLogger\Logger;
+use Bmohsen\DiscordLogger\Tests\Support\FakeDiscordWebHook;
 use InvalidArgumentException;
-use MarvinLabs\DiscordLogger\Contracts\DiscordWebHook;
-use MarvinLabs\DiscordLogger\Logger;
-use MarvinLabs\DiscordLogger\Tests\Support\FakeDiscordWebHook;
-use RuntimeException;
 
 class LoggerTest extends TestCase
 {
 
-    /** @var \MarvinLabs\DiscordLogger\Tests\Support\FakeDiscordWebHook */
+    /** @var FakeDiscordWebHook */
     private $discordFake;
 
-    /** @var \MarvinLabs\DiscordLogger\Logger */
+    /** @var Logger */
     private $logger;
 
     /** @var \Monolog\Logger */

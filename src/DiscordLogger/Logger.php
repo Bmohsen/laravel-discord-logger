@@ -1,18 +1,19 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger;
+namespace Bmohsen\DiscordLogger;
 
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
 use Monolog\Logger as Monolog;
 
 class Logger
 {
-    /** @var \Illuminate\Contracts\Config\Repository */
+    /** @var Repository */
     private $config;
 
-    /** @var \Illuminate\Contracts\Container\Container */
+    /** @var Container */
     private $container;
 
     public function __construct(Container $container, Repository $config)
@@ -21,7 +22,7 @@ class Logger
         $this->container = $container;
     }
 
-    /** @throws \Illuminate\Contracts\Container\BindingResolutionException */
+    /** @throws BindingResolutionException */
     public function __invoke(array $config)
     {
         if (empty($config['url']))
@@ -32,7 +33,7 @@ class Logger
         return new Monolog($this->config->get('app.name'), [$this->newDiscordLogHandler($config)]);
     }
 
-    /** @throws \Illuminate\Contracts\Container\BindingResolutionException */
+    /** @throws BindingResolutionException */
     protected function newDiscordLogHandler(array $config): LogHandler
     {
         return new LogHandler($this->container, $this->config, $config);

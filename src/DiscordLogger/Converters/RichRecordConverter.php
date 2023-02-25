@@ -1,16 +1,16 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Converters;
+namespace Bmohsen\DiscordLogger\Converters;
 
+use Bmohsen\DiscordLogger\Discord\Embed;
+use Bmohsen\DiscordLogger\Discord\Exceptions\ConfigurationIssue;
+use Bmohsen\DiscordLogger\Discord\Message;
 use Illuminate\Support\Arr;
-use MarvinLabs\DiscordLogger\Discord\Embed;
-use MarvinLabs\DiscordLogger\Discord\Exceptions\ConfigurationIssue;
-use MarvinLabs\DiscordLogger\Discord\Message;
 
 class RichRecordConverter extends AbstractRecordConverter
 {
     /**
-     * @throws \MarvinLabs\DiscordLogger\Discord\Exceptions\ConfigurationIssue
+     * @throws ConfigurationIssue
      */
     public function buildMessages(array $record): array
     {
@@ -23,10 +23,8 @@ class RichRecordConverter extends AbstractRecordConverter
 
         $stackTraceMessage = null;
         $stacktrace = $this->getStacktrace($record);
-        if ($stacktrace !== null)
-        {
-            switch ($this->stackTraceMode($stacktrace))
-            {
+        if ($stacktrace !== null) {
+            switch ($this->stackTraceMode($stacktrace)) {
                 case 'file':
                     // Discord webhooks do not support EMBED + FILE at the same time. Hence another message has to be sent
                     $stackTraceMessage = Message::make()->file($stacktrace, $this->getStacktraceFilename($record));
@@ -61,8 +59,7 @@ class RichRecordConverter extends AbstractRecordConverter
     protected function addContextEmbed(Message $message, array $record): void
     {
         $context = Arr::except($record['context'] ?? [], ['exception']);
-        if (empty($context))
-        {
+        if (empty($context)) {
             return;
         }
 
@@ -74,8 +71,7 @@ class RichRecordConverter extends AbstractRecordConverter
     protected function addExtrasEmbed(Message $message, array $record): void
     {
         $extras = $record['extra'] ?? [];
-        if (empty($extras))
-        {
+        if (empty($extras)) {
             return;
         }
 

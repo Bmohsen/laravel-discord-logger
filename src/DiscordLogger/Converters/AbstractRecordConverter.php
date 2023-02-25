@@ -1,18 +1,18 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Converters;
+namespace Bmohsen\DiscordLogger\Converters;
 
+use Bmohsen\DiscordLogger\Contracts\DiscordWebHook;
+use Bmohsen\DiscordLogger\Contracts\RecordToMessage;
+use Bmohsen\DiscordLogger\Discord\Exceptions\ConfigurationIssue;
+use Bmohsen\DiscordLogger\Discord\Message;
 use Illuminate\Contracts\Config\Repository;
-use function in_array;
-use MarvinLabs\DiscordLogger\Contracts\DiscordWebHook;
-use MarvinLabs\DiscordLogger\Contracts\RecordToMessage;
-use MarvinLabs\DiscordLogger\Discord\Exceptions\ConfigurationIssue;
-use MarvinLabs\DiscordLogger\Discord\Message;
 use Throwable;
+use function in_array;
 
 abstract class AbstractRecordConverter implements RecordToMessage
 {
-    /** @var \Illuminate\Contracts\Config\Repository */
+    /** @var Repository */
     protected $config;
 
     public function __construct(Repository $config)
@@ -21,25 +21,20 @@ abstract class AbstractRecordConverter implements RecordToMessage
     }
 
     /**
-     * @throws \MarvinLabs\DiscordLogger\Discord\Exceptions\ConfigurationIssue
+     * @throws ConfigurationIssue
      */
     protected function stackTraceMode(string $stacktrace): string
     {
         $value = (string)$this->config->get('discord-logger.stacktrace', 'smart');
 
-        if (!in_array($value, RecordToMessage::ALLOWED_STACKTRACE_MODES, true))
-        {
+        if (!in_array($value, RecordToMessage::ALLOWED_STACKTRACE_MODES, true)) {
             throw new ConfigurationIssue("Invalid value for configuration `discord-logger.stacktrace`: $value");
         }
 
-        if ($value === 'smart')
-        {
-            if (strlen($stacktrace) < DiscordWebHook::MAX_CONTENT_LENGTH)
-            {
+        if ($value === 'smart') {
+            if (strlen($stacktrace) < DiscordWebHook::MAX_CONTENT_LENGTH) {
                 $value = 'inline';
-            }
-            else
-            {
+            } else {
                 $value = 'file';
             }
         }
@@ -55,12 +50,11 @@ abstract class AbstractRecordConverter implements RecordToMessage
 
     protected function getStacktrace(array $record): ?string
     {
-        if (!is_a($record['context']['exception'] ?? '', Throwable::class))
-        {
+        if (!is_a($record['context']['exception'] ?? '', Throwable::class)) {
             return null;
         }
 
-        /** @var \Throwable $exception */
+        /** @var Throwable $exception */
         $exception = $record['context']['exception'];
 
         return "On {$exception->getFile()}:{$exception->getLine()} (code {$exception->getCode()})\n" .
@@ -85,8 +79,7 @@ abstract class AbstractRecordConverter implements RecordToMessage
     protected function addGenericMessageFrom(Message $message): void
     {
         $name = $this->getFromName();
-        if ($name === null)
-        {
+        if ($name === null) {
             return;
         }
 

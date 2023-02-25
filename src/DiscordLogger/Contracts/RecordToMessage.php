@@ -1,6 +1,6 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Contracts;
+namespace Bmohsen\DiscordLogger\Contracts;
 
 interface RecordToMessage
 {

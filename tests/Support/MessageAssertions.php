@@ -1,10 +1,10 @@
 <?php
 
 
-namespace MarvinLabs\DiscordLogger\Tests\Support;
+namespace Bmohsen\DiscordLogger\Tests\Support;
 
 
-use MarvinLabs\DiscordLogger\Discord\Message;
+use Bmohsen\DiscordLogger\Discord\Message;
 use PHPUnit\Framework\Assert;
 
 class MessageAssertions

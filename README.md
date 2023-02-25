@@ -22,14 +22,14 @@ On earlier versions, you need to do that manually. You must install the service 
 // config/app.php
 'providers' => [
     ...
-    MarvinLabs\DiscordLogger\ServiceProvider::class
+    Bmohsen\DiscordLogger\ServiceProvider::class
 ];
 ```
 
 You can then publish the configuration file:
 
 ``` bash
-php artisan vendor:publish --provider "MarvinLabs\DiscordLogger\ServiceProvider"
+php artisan vendor:publish --provider "Bmohsen\DiscordLogger\ServiceProvider"
 ```
 
 ## Setup
@@ -48,7 +48,7 @@ You must add a new channel to your `config/logging.php` file:
     //...
     'discord' => [
         'driver' => 'custom',
-        'via'    => MarvinLabs\DiscordLogger\Logger::class,
+        'via'    => Bmohsen\DiscordLogger\Logger::class,
         'level'  => 'debug',
         'url'    => env('LOG_DISCORD_WEBHOOK_URL'),
     ],

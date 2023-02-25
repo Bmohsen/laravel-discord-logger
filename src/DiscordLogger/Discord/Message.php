@@ -1,10 +1,10 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Discord;
+namespace Bmohsen\DiscordLogger\Discord;
 
+use Bmohsen\DiscordLogger\Contracts\DiscordWebHook;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
-use MarvinLabs\DiscordLogger\Contracts\DiscordWebHook;
 
 class Message implements Arrayable
 {
@@ -23,7 +23,7 @@ class Message implements Arrayable
     /** @var array */
     public $file;
 
-    /** @var array Array of \MarvinLabs\DiscordLogger\Discord\Embed objects */
+    /** @var array Array of \Bmohsen\DiscordLogger\Discord\Embed objects */
     public $embeds;
 
     /** Static factory method */
@@ -34,8 +34,7 @@ class Message implements Arrayable
 
     protected function __construct(?string $content = null)
     {
-        if ($content !== null)
-        {
+        if ($content !== null) {
             $this->content($content);
         }
     }
@@ -49,8 +48,7 @@ class Message implements Arrayable
     public function from(string $username, ?string $avatarUrl = null): Message
     {
         $this->username = $username;
-        if ($avatarUrl !== null)
-        {
+        if ($avatarUrl !== null) {
             $this->avatarUrl = $avatarUrl;
         }
         return $this;
@@ -82,11 +80,11 @@ class Message implements Arrayable
     {
         return array_filter(
             ['content'    => $this->content,
-             'username'   => $this->username,
-             'avatar_url' => $this->avatarUrl,
-             'tts'        => $this->tts ? 'true' : 'false',
-             'file'       => $this->file,
-             'embeds'     => $this->serializeEmbeds(),],
+                'username'   => $this->username,
+                'avatar_url' => $this->avatarUrl,
+                'tts'        => $this->tts ? 'true' : 'false',
+                'file'       => $this->file,
+                'embeds'     => $this->serializeEmbeds(),],
             static function ($value) {
                 return $value !== null && $value !== [];
             });

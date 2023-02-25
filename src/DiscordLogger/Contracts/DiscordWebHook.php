@@ -1,8 +1,8 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Contracts;
+namespace Bmohsen\DiscordLogger\Contracts;
 
-use MarvinLabs\DiscordLogger\Discord\Message;
+use Bmohsen\DiscordLogger\Discord\Message;
 
 interface DiscordWebHook
 {

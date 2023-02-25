@@ -1,10 +1,10 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Discord;
+namespace Bmohsen\DiscordLogger\Discord;
 
+use Bmohsen\DiscordLogger\Contracts\DiscordWebHook;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
-use MarvinLabs\DiscordLogger\Contracts\DiscordWebHook;
 
 class Embed implements Arrayable
 {

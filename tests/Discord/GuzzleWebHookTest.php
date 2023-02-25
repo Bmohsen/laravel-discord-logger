@@ -1,16 +1,18 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Tests\Discord;
+namespace Bmohsen\DiscordLogger\Tests\Discord;
 
+use Bmohsen\DiscordLogger\Contracts\DiscordWebHook;
+use Bmohsen\DiscordLogger\Discord\GuzzleWebHook;
+use Bmohsen\DiscordLogger\Discord\Message;
+use Bmohsen\DiscordLogger\Tests\TestCase;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use MarvinLabs\DiscordLogger\Discord\GuzzleWebHook;
-use MarvinLabs\DiscordLogger\Discord\Message;
-use MarvinLabs\DiscordLogger\Tests\TestCase;
+use function array_filter;
 use function explode;
 use function json_decode;
 
@@ -19,7 +21,7 @@ class GuzzleWebHookTest extends TestCase
     /** @var array */
     private $httpHistory;
 
-    /** @var \MarvinLabs\DiscordLogger\Contracts\DiscordWebHook */
+    /** @var DiscordWebHook */
     private $discord;
 
     protected function setUp(): void
@@ -71,7 +73,7 @@ class GuzzleWebHookTest extends TestCase
                     })->toArray();
                 })
                 ->map(static function ($data) {
-                    return \array_filter(['name' => $data[1] ?? null, 'contents' => $data[4] ?? null]);
+                    return array_filter(['name' => $data[1] ?? null, 'contents' => $data[4] ?? null]);
                 })
                 ->reject(static function ($item) {
                     return empty($item);

@@ -1,12 +1,14 @@
 <?php
 
+use Bmohsen\DiscordLogger\Converters\RichRecordConverter;
+
 return [
 
     /*
      * The author of the log messages. You can set both to null to keep the Webhook author set in Discord
      */
-    'from'       => [
-        'name'       => env('APP_NAME', 'Laravel Logger'),
+    'from' => [
+        'name' => env('APP_NAME', 'Laravel Logger'),
         'avatar_url' => null,
     ],
 
@@ -14,10 +16,10 @@ return [
      * The converter to use to turn a log record into a discord message
      *
      * Bundled converters:
-     * - \MarvinLabs\DiscordLogger\Converters\SimpleRecordConverter::class
-     * - \MarvinLabs\DiscordLogger\Converters\RichRecordConverter::class
+     * - \Bmohsen\DiscordLogger\Converters\SimpleRecordConverter::class
+     * - \Bmohsen\DiscordLogger\Converters\RichRecordConverter::class
      */
-    'converter'  => \MarvinLabs\DiscordLogger\Converters\RichRecordConverter::class,
+    'converter' => RichRecordConverter::class,
 
     /**
      * If enabled, stacktraces will be attached as files. If not, stacktraces will be directly printed out in the

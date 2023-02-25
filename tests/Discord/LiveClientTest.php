@@ -1,19 +1,18 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Tests\Discord;
+namespace Bmohsen\DiscordLogger\Tests\Discord;
 
+use Bmohsen\DiscordLogger\Discord\Embed;
+use Bmohsen\DiscordLogger\Discord\GuzzleWebHook;
+use Bmohsen\DiscordLogger\Discord\Message;
+use Bmohsen\DiscordLogger\Tests\TestCase;
 use GuzzleHttp\Client as HttpClient;
-use Illuminate\Support\Facades\Config;
-use MarvinLabs\DiscordLogger\Discord\Embed;
-use MarvinLabs\DiscordLogger\Discord\GuzzleWebHook;
-use MarvinLabs\DiscordLogger\Discord\Message;
-use MarvinLabs\DiscordLogger\Tests\TestCase;
 use PHPUnit\Framework\SkippedTestError;
 
 /** @group RequiresNetwork */
 class LiveClientTest extends TestCase
 {
-    /** @var \MarvinLabs\DiscordLogger\Discord\GuzzleWebHook */
+    /** @var GuzzleWebHook */
     private $client;
 
     protected function setUp(): void
@@ -21,8 +20,7 @@ class LiveClientTest extends TestCase
         parent::setUp();
 
         $webHookUrl = $this->app['config']->get('logging.channels.discord.url');
-        if ($webHookUrl === null)
-        {
+        if ($webHookUrl === null) {
             // You can add that line to phpunit.xml and configure your logging.php config file accordingly
             // <server name="LOG_DISCORD_WEBHOOK_URL" value="https://discordapp.com/api/webhooks/<abc>/<xyz>"/>
             throw new SkippedTestError('Live test is ignored as you have not configured a logging channel with a real webhook');

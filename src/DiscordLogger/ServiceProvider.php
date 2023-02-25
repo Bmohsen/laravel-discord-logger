@@ -1,13 +1,13 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger;
+namespace Bmohsen\DiscordLogger;
 
+use Bmohsen\DiscordLogger\Contracts\DiscordWebHook;
+use Bmohsen\DiscordLogger\Discord\GuzzleWebHook;
 use GuzzleHttp\Client;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use MarvinLabs\DiscordLogger\Contracts\DiscordWebHook;
-use MarvinLabs\DiscordLogger\Discord\GuzzleWebHook;
 use Illuminate\Support\Str;
 
 class ServiceProvider extends BaseServiceProvider
@@ -34,8 +34,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerContainerBindings(): void
     {
         $this->app->bind(DiscordWebHook::class, static function (Container $app, $params) {
-            if (empty($params['url']))
-            {
+            if (empty($params['url'])) {
                 throw new BindingResolutionException('You must provide a URL to make a DiscordWebHook instance');
             }
 

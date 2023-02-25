@@ -1,11 +1,11 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Tests\Converters;
+namespace Bmohsen\DiscordLogger\Tests\Converters;
 
+use Bmohsen\DiscordLogger\Contracts\RecordToMessage;
+use Bmohsen\DiscordLogger\Converters\RichRecordConverter;
+use Bmohsen\DiscordLogger\Tests\Support\MessageAssertions;
 use Exception;
-use MarvinLabs\DiscordLogger\Contracts\RecordToMessage;
-use MarvinLabs\DiscordLogger\Converters\RichRecordConverter;
-use MarvinLabs\DiscordLogger\Tests\Support\MessageAssertions;
 use function json_encode;
 use const JSON_PRETTY_PRINT;
 
@@ -27,12 +27,12 @@ class RichLoggerMessagesTest extends AbstractLoggerMessagesTest
         MessageAssertions::assertMessagePartialMatch([
             'embeds' => [
                 0 => ['title'       => ':poop: `[2000-01-01 12:13:14] Laravel.WARNING`',
-                      'description' => ':black_small_square: `This is a test`',
-                      'color'       => 0x123456],
+                    'description' => ':black_small_square: `This is a test`',
+                    'color'       => 0x123456],
                 1 => ['description' => "**Context**\n`" . json_encode(['foo' => 'bar'], JSON_PRETTY_PRINT) . '`',
-                      'color'       => 0x123456,],
+                    'color'       => 0x123456,],
                 2 => ['description' => "**Extra**\n`" . json_encode([1, 2, 3, 'four'], JSON_PRETTY_PRINT) . '`',
-                      'color'       => 0x123456,],
+                    'color'       => 0x123456,],
             ],
         ], $message);
     }
@@ -75,7 +75,7 @@ class RichLoggerMessagesTest extends AbstractLoggerMessagesTest
         MessageAssertions::assertMessagePartialMatch([
             'embeds' => [
                 0 => ['title'       => '`[2000-01-01 12:13:14] Laravel.CRITICAL`',
-                      'description' => '`This is a test`'],
+                    'description' => '`This is a test`'],
             ],
         ], $messages[0]);
 

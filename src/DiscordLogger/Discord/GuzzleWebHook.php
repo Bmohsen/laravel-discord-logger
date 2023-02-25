@@ -1,17 +1,17 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Discord;
+namespace Bmohsen\DiscordLogger\Discord;
 
+use Bmohsen\DiscordLogger\Contracts\DiscordWebHook;
+use Bmohsen\DiscordLogger\Discord\Exceptions\InvalidMessage;
+use Bmohsen\DiscordLogger\Discord\Exceptions\MessageCouldNotBeSent;
 use Exception;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
-use MarvinLabs\DiscordLogger\Contracts\DiscordWebHook;
-use MarvinLabs\DiscordLogger\Discord\Exceptions\InvalidMessage;
-use MarvinLabs\DiscordLogger\Discord\Exceptions\MessageCouldNotBeSent;
 
 class GuzzleWebHook implements DiscordWebHook
 {
-    /** @var \GuzzleHttp\Client */
+    /** @var HttpClient */
     protected $http;
 
     /** @var string */
@@ -29,24 +29,19 @@ class GuzzleWebHook implements DiscordWebHook
     }
 
     /**
-     * @throws \MarvinLabs\DiscordLogger\Discord\Exceptions\InvalidMessage
-     * @throws \MarvinLabs\DiscordLogger\Discord\Exceptions\MessageCouldNotBeSent
+     * @throws InvalidMessage
+     * @throws MessageCouldNotBeSent
      */
     public function send(Message $message): void
     {
         $payload = $this->buildPayload($message);
         $requestType = $this->requestType($message);
 
-        try
-        {
+        try {
             $this->http->post($this->url, [$requestType => $payload]);
-        }
-        catch (ClientException $e)
-        {
+        } catch (ClientException $e) {
             throw MessageCouldNotBeSent::serviceRespondedWithAnError($e);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw MessageCouldNotBeSent::couldNotCommunicateWithDiscord($e);
         }
     }
@@ -57,17 +52,15 @@ class GuzzleWebHook implements DiscordWebHook
     }
 
     /**
-     * @throws \MarvinLabs\DiscordLogger\Discord\Exceptions\InvalidMessage
+     * @throws InvalidMessage
      */
     protected function buildPayload(Message $message): array
     {
-        if ($this->isMessageEmpty($message))
-        {
+        if ($this->isMessageEmpty($message)) {
             throw InvalidMessage::cannotSendAnEmptyMessage();
         }
 
-        if ($this->requestType($message) === 'multipart')
-        {
+        if ($this->requestType($message) === 'multipart') {
             return $this->buildMultipartPayload($message);
         }
 
@@ -75,12 +68,11 @@ class GuzzleWebHook implements DiscordWebHook
     }
 
     /**
-     * @throws \MarvinLabs\DiscordLogger\Discord\Exceptions\InvalidMessage
+     * @throws InvalidMessage
      */
     protected function buildJsonPayload(Message $message): array
     {
-        if ($this->isMessageEmpty($message))
-        {
+        if ($this->isMessageEmpty($message)) {
             throw InvalidMessage::cannotSendAnEmptyMessage();
         }
 
@@ -88,12 +80,11 @@ class GuzzleWebHook implements DiscordWebHook
     }
 
     /**
-     * @throws \MarvinLabs\DiscordLogger\Discord\Exceptions\InvalidMessage
+     * @throws InvalidMessage
      */
     protected function buildMultipartPayload(Message $message): array
     {
-        if ($message->embeds !== null)
-        {
+        if ($message->embeds !== null) {
             throw InvalidMessage::embedsNotSupportedWithFileUploads();
         }
 
@@ -113,7 +104,7 @@ class GuzzleWebHook implements DiscordWebHook
     protected function isMessageEmpty($message): bool
     {
         return $message->content === null
-               && $message->file === null
-               && $message->embeds === null;
+            && $message->file === null
+            && $message->embeds === null;
     }
 }

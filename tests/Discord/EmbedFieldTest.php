@@ -1,9 +1,9 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Tests\Discord;
+namespace Bmohsen\DiscordLogger\Tests\Discord;
 
-use MarvinLabs\DiscordLogger\Discord\EmbedField;
-use MarvinLabs\DiscordLogger\Tests\TestCase;
+use Bmohsen\DiscordLogger\Discord\EmbedField;
+use Bmohsen\DiscordLogger\Tests\TestCase;
 
 class EmbedFieldTest extends TestCase
 {

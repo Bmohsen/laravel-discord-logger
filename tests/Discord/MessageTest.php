@@ -1,12 +1,12 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Tests\Discord;
+namespace Bmohsen\DiscordLogger\Tests\Discord;
 
+use Bmohsen\DiscordLogger\Contracts\DiscordWebHook;
+use Bmohsen\DiscordLogger\Discord\Embed;
+use Bmohsen\DiscordLogger\Discord\Message;
+use Bmohsen\DiscordLogger\Tests\TestCase;
 use Illuminate\Support\Str;
-use MarvinLabs\DiscordLogger\Contracts\DiscordWebHook;
-use MarvinLabs\DiscordLogger\Discord\Embed;
-use MarvinLabs\DiscordLogger\Discord\Message;
-use MarvinLabs\DiscordLogger\Tests\TestCase;
 
 class MessageTest extends TestCase
 {
@@ -44,13 +44,13 @@ class MessageTest extends TestCase
 
         $this->assertEquals(
             ['content'    => 'my content',
-             'username'   => 'John',
-             'avatar_url' => 'avatar.url',
-             'tts'        => 'true',
-             'file'       => ['name'     => 'file',
-                              'contents' => 'file content',
-                              'filename' => 'example.txt',],
-             'embeds'     => [$embed->toArray(),],
+                'username'   => 'John',
+                'avatar_url' => 'avatar.url',
+                'tts'        => 'true',
+                'file'       => ['name'     => 'file',
+                    'contents' => 'file content',
+                    'filename' => 'example.txt',],
+                'embeds'     => [$embed->toArray(),],
             ],
             $message->toArray());
     }
@@ -66,12 +66,12 @@ class MessageTest extends TestCase
 
         $this->assertEquals(
             ['content'    => 'my content',
-             'username'   => 'John',
-             'avatar_url' => 'avatar.url',
-             'tts'        => 'false',
-             'file'       => ['name'     => 'file',
-                              'contents' => 'file content',
-                              'filename' => 'example.txt',],
+                'username'   => 'John',
+                'avatar_url' => 'avatar.url',
+                'tts'        => 'false',
+                'file'       => ['name'     => 'file',
+                    'contents' => 'file content',
+                    'filename' => 'example.txt',],
             ],
             $message->toArray());
     }

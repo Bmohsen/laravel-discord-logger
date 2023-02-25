@@ -1,6 +1,6 @@
 <?php
 
-namespace MarvinLabs\DiscordLogger\Discord\Exceptions;
+namespace Bmohsen\DiscordLogger\Discord\Exceptions;
 
 use Exception;
 
