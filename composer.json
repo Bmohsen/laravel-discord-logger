@@ -1,5 +1,5 @@
 {
-  "name": "Bmohsen/laravel-discord-logger",
+  "name": "bmohsen/laravel-discord-logger",
   "description": "Logging to a discord channel in Laravel",
   "keywords": [
     "laravel",
